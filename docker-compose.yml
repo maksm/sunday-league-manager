@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: sunday-league-manager
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL:-file:/app/data/production.db}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+      - NEXT_PUBLIC_LOCALE=${NEXT_PUBLIC_LOCALE:-en}
+      - NEXT_PUBLIC_APP_NAME=${NEXT_PUBLIC_APP_NAME:-Sunday League Manager}
+    volumes:
+      - ./data:/app/data
+    networks:
+      - app-network
+
+  # Optional: PostgreSQL instead of SQLite
+  # Uncomment this section and update DATABASE_URL to use PostgreSQL
+  # postgres:
+  #   image: postgres:16-alpine
+  #   container_name: sunday-league-postgres
+  #   restart: unless-stopped
+  #   environment:
+  #     - POSTGRES_USER=sunday_league
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  #     - POSTGRES_DB=sunday_league
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+  #   networks:
+  #     - app-network
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U sunday_league"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres-data:

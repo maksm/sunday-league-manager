@@ -33,8 +33,10 @@ debug-*.html
 .env.development.local
 .env.test.local
 .env.production.local
+.env.production
 # Allow .env.example
 !.env.example
+!.env.production.example
 
 # Testing
 /coverage
@@ -44,9 +46,11 @@ debug-*.html
 /playwright/.cache/
 /playwright/.auth/
 
-# Prisma
+# Prisma & Database
 /prisma/*.db
 /prisma/*.db-journal
+/data
+/logs
 
 # Editor/IDE
 .DS_Store

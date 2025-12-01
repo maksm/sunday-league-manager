@@ -12,6 +12,7 @@ const withPWA = require('next-pwa')({
 });
 
 const nextConfig: NextConfig = {
+  output: 'standalone', // Enable standalone output for Docker
   webpack: (config) => {
     config.externals.push('@node-rs/argon2', '@node-rs/bcrypt');
     return config;
