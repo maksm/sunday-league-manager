@@ -1,0 +1,35 @@
+{
+  "auth": {
+    "unauthorized": "Unauthorized",
+    "userNotFound": "User not found",
+    "invalidCredentials": "Invalid credentials",
+    "currentPasswordIncorrect": "Current password is incorrect",
+    "resetPasswordError": "An error occurred while resetting password",
+    "resetPasswordSuccess": "Password reset successfully"
+  },
+  "register": {
+    "playerNotFound": "Player not found",
+    "playerAlreadyClaimed": "Player already claimed",
+    "internalError": "Internal Server Error"
+  },
+  "games": {
+    "gameNotFound": "Game not found",
+    "cannotBalanceFinished": "Cannot balance teams for finished game",
+    "notEnoughPlayers": "Not enough players (minimum 2 required)",
+    "balanceFailed": "Failed to balance teams",
+    "gameAlreadyFinished": "Game already finished",
+    "finishGameFailed": "Failed to finish game",
+    "canOnlyVoteFinished": "Can only vote on finished games",
+    "alreadyVoted": "Already voted for this game",
+    "targetPlayerNotFound": "Target player not found",
+    "voteFailed": "Failed to cast vote"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidFormat": "Invalid format"
+  },
+  "generic": {
+    "somethingWentWrong": "Something went wrong",
+    "tryAgain": "Please try again"
+  }
+}

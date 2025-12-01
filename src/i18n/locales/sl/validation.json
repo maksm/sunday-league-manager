@@ -1,0 +1,28 @@
+{
+  "password": {
+    "minLength": "Geslo mora biti dolgo vsaj {min} znakov",
+    "required": "Geslo je obvezno"
+  },
+  "name": {
+    "required": "Ime je obvezno",
+    "tooLong": "Ime je predolgo"
+  },
+  "gameId": {
+    "required": "ID tekme je obvezen"
+  },
+  "playerId": {
+    "required": "ID igralca je obvezen",
+    "notFound": "Igralec ni najden"
+  },
+  "result": {
+    "invalidFormat": "Rezultat mora biti v obliki \"X-Y\"",
+    "teamARequired": "Ekipa A mora imeti vsaj enega igralca",
+    "teamBRequired": "Ekipa B mora imeti vsaj enega igralca"
+  },
+  "general": {
+    "eitherOr": "Polje {field1} ali {field2} mora biti podano",
+    "currentAndNewPassword": "Trenutno in novo geslo sta obvezna",
+    "newPasswordMinLength": "Novo geslo mora biti dolgo vsaj {min} znakov",
+    "targetPlayerRequired": "ID ciljnega igralca je obvezen"
+  }
+}

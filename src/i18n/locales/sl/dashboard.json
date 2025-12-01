@@ -1,0 +1,78 @@
+{
+  "title": "Sunday League",
+  "leaderboard": {
+    "title": "Igralci",
+    "headers": {
+      "rank": "Mesto",
+      "player": "Igralec",
+      "elo": "Elo",
+      "form": "Forma"
+    }
+  },
+  "noGames": "Ni načrtovanih prihodnjih tekem.",
+  "noPlayerProfile": "Napaka: Profil igralca ni najden.",
+  "gameCard": {
+    "title": "Naslednja tekma",
+    "rsvp": {
+      "in": "Pridem",
+      "out": "Ne pridem",
+      "loading": "...",
+      "statusLabel": "Trenutno ste:",
+      "attending": "Pridem",
+      "attendingBeer": "Pridem in prinesem pive",
+      "notAttending": "Ne pridem",
+      "injured": "Poškodovan",
+      "status": {
+        "in": "Pridem ⚽",
+        "inBeer": "Prinesem pive 🍺",
+        "out": "Ne pridem ❌",
+        "outInjured": "Poškodovan"
+      }
+    }
+  },
+  "votingCard": {
+    "title": "Glasuj: Igralec tekme",
+    "successTitle": "Igralec tekme",
+    "selectPlaceholder": "Izberite igralca...",
+    "submit": "Oddaj glas",
+    "submitting": "Glasovanje...",
+    "thanks": "Hvala za glasovanje!"
+  },
+  "teamsView": {
+    "title": "Ekipe",
+    "teamA": "Ekipa A",
+    "teamB": "Ekipa B",
+    "avgElo": "Povp:",
+    "eloDifference": "Elo razlika:",
+    "matchResult": "Rezultat tekme",
+    "generateTeams": "Generiraj ekipe",
+    "balancing": "Uravnoteženje...",
+    "finishGame": "Zaključi tekmo",
+    "saving": "Shranjevanje...",
+    "scorePlaceholder": {
+      "teamA": "A",
+      "teamB": "B"
+    }
+  },
+  "userMenu": {
+    "resetPassword": "Ponastavi geslo",
+    "logout": "Odjava"
+  },
+  "resetPasswordDialog": {
+    "title": "Ponastavi geslo",
+    "form": {
+      "currentPassword": "Trenutno geslo",
+      "newPassword": "Novo geslo",
+      "confirmPassword": "Potrdi novo geslo",
+      "cancel": "Prekliči",
+      "submit": "Ponastavi geslo",
+      "submitting": "Ponastavljanje..."
+    },
+    "success": "Geslo uspešno ponastavljeno!",
+    "errors": {
+      "passwordMismatch": "Novi gesli se ne ujemata",
+      "passwordTooShort": "Geslo mora biti dolgo vsaj 6 znakov",
+      "genericError": "Prišlo je do napake. Prosimo, poskusite znova."
+    }
+  }
+}

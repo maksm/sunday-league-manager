@@ -1,0 +1,78 @@
+{
+  "title": "Sunday League",
+  "leaderboard": {
+    "title": "Players",
+    "headers": {
+      "rank": "Rank",
+      "player": "Player",
+      "elo": "Elo",
+      "form": "Form"
+    }
+  },
+  "noGames": "No upcoming games scheduled.",
+  "noPlayerProfile": "Error: No player profile found.",
+  "gameCard": {
+    "title": "Next Match",
+    "rsvp": {
+      "in": "I'm In",
+      "out": "Out",
+      "loading": "...",
+      "statusLabel": "You are currently:",
+      "attending": "Attending",
+      "attendingBeer": "Attending & Bringing Beers",
+      "notAttending": "Not Attending",
+      "injured": "Injured",
+      "status": {
+        "in": "Attending ⚽",
+        "inBeer": "Bringing Beers 🍺",
+        "out": "Not Attending ❌",
+        "outInjured": "Injured"
+      }
+    }
+  },
+  "votingCard": {
+    "title": "Vote: Man of the Match",
+    "successTitle": "Man of the Match",
+    "selectPlaceholder": "Select a player...",
+    "submit": "Submit Vote",
+    "submitting": "Voting...",
+    "thanks": "Thanks for voting!"
+  },
+  "teamsView": {
+    "title": "Teams",
+    "teamA": "Team A",
+    "teamB": "Team B",
+    "avgElo": "Avg:",
+    "eloDifference": "Elo Difference:",
+    "matchResult": "Match Result",
+    "generateTeams": "Generate Teams",
+    "balancing": "Balancing...",
+    "finishGame": "Finish Game",
+    "saving": "Saving...",
+    "scorePlaceholder": {
+      "teamA": "A",
+      "teamB": "B"
+    }
+  },
+  "userMenu": {
+    "resetPassword": "Reset Password",
+    "logout": "Logout"
+  },
+  "resetPasswordDialog": {
+    "title": "Reset Password",
+    "form": {
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm New Password",
+      "cancel": "Cancel",
+      "submit": "Reset Password",
+      "submitting": "Resetting..."
+    },
+    "success": "Password reset successfully!",
+    "errors": {
+      "passwordMismatch": "New passwords do not match",
+      "passwordTooShort": "Password must be at least 6 characters",
+      "genericError": "An error occurred. Please try again."
+    }
+  }
+}

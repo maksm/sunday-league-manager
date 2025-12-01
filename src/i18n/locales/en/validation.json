@@ -1,0 +1,28 @@
+{
+  "password": {
+    "minLength": "Password must be at least {min} characters",
+    "required": "Password is required"
+  },
+  "name": {
+    "required": "Name is required",
+    "tooLong": "Name too long"
+  },
+  "gameId": {
+    "required": "Game ID is required"
+  },
+  "playerId": {
+    "required": "Player ID is required",
+    "notFound": "Player not found"
+  },
+  "result": {
+    "invalidFormat": "Result must be in format \"X-Y\"",
+    "teamARequired": "Team A must have at least one player",
+    "teamBRequired": "Team B must have at least one player"
+  },
+  "general": {
+    "eitherOr": "Either {field1} or {field2} must be provided",
+    "currentAndNewPassword": "Current password and new password are required",
+    "newPasswordMinLength": "New password must be at least {min} characters",
+    "targetPlayerRequired": "Target player ID is required"
+  }
+}

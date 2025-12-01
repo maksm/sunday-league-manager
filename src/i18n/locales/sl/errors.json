@@ -1,0 +1,35 @@
+{
+  "auth": {
+    "unauthorized": "Nepooblaščen dostop",
+    "userNotFound": "Uporabnik ni najden",
+    "invalidCredentials": "Napačni podatki",
+    "currentPasswordIncorrect": "Trenutno geslo je napačno",
+    "resetPasswordError": "Prišlo je do napake pri ponastavljanju gesla",
+    "resetPasswordSuccess": "Geslo uspešno ponastavljeno"
+  },
+  "register": {
+    "playerNotFound": "Igralec ni najden",
+    "playerAlreadyClaimed": "Igralec je že zahteval profil",
+    "internalError": "Notranja napaka strežnika"
+  },
+  "games": {
+    "gameNotFound": "Tekma ni najdena",
+    "cannotBalanceFinished": "Ekip ni mogoče uravnotežiti za končano tekmo",
+    "notEnoughPlayers": "Premalo igralcev (minimalno 2 potrebna)",
+    "balanceFailed": "Uravnoteženje ekip ni uspelo",
+    "gameAlreadyFinished": "Tekma je že končana",
+    "finishGameFailed": "Zaključevanje tekme ni uspelo",
+    "canOnlyVoteFinished": "Glasovati je mogoče samo za končane tekme",
+    "alreadyVoted": "Za to tekmo ste že glasovali",
+    "targetPlayerNotFound": "Ciljni igralec ni najden",
+    "voteFailed": "Oddaja glasu ni uspela"
+  },
+  "validation": {
+    "required": "To polje je obvezno",
+    "invalidFormat": "Neveljavna oblika"
+  },
+  "generic": {
+    "somethingWentWrong": "Nekaj je šlo narobe",
+    "tryAgain": "Prosimo, poskusite znova"
+  }
+}

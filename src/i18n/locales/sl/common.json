@@ -1,0 +1,33 @@
+{
+  "buttons": {
+    "submit": "Potrdi",
+    "cancel": "Prekliči",
+    "save": "Shrani",
+    "delete": "Izbriši",
+    "edit": "Uredi",
+    "create": "Ustvari",
+    "close": "Zapri",
+    "back": "Nazaj",
+    "next": "Naprej",
+    "confirm": "Potrdi"
+  },
+  "status": {
+    "loading": "Nalaganje...",
+    "saving": "Shranjevanje...",
+    "creating": "Ustvarjanje...",
+    "deleting": "Brisanje...",
+    "success": "Uspešno!",
+    "error": "Napaka"
+  },
+  "common": {
+    "or": "ali",
+    "and": "in",
+    "search": "Iskanje",
+    "filter": "Filter",
+    "sort": "Razvrsti",
+    "actions": "Akcije",
+    "name": "Ime",
+    "status": "Status",
+    "vs": "VS"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "title": "Nadzorna plošča",
+  "subtitle": "Upravljaj igralce in senčne profile",
+  "createShadowPlayer": {
+    "title": "Ustvari senčni profil",
+    "description": "Upravljajte profile igralcev. Lahko ustvarite senčne profile za igralce, ki se še niso registrirali.",
+    "placeholder": "Ime igralca",
+    "submit": "Ustvari igralca",
+    "submitting": "Ustvarjanje...",
+    "errors": {
+      "createFailed": "Ustvarjanje igralca ni uspelo",
+      "createError": "Napaka pri ustvarjanju igralca"
+    }
+  },
+  "playerList": {
+    "title": "Vsi igralci",
+    "headers": {
+      "name": "Ime",
+      "username": "Uporabniško ime",
+      "elo": "Elo",
+      "status": "Status",
+      "actions": "Akcije"
+    },
+    "status": {
+      "registered": "Registriran",
+      "shadow": "Senčni"
+    }
+  },
+  "playerActions": {
+    "edit": "Uredi",
+    "save": "Shrani",
+    "cancel": "Prekliči",
+    "delete": "Izbriši",
+    "confirmDelete": "Ali ste prepričani, da želite izbrisati {name}?",
+    "errors": {
+      "updateFailed": "Posodobitev igralca ni uspela",
+      "updateError": "Napaka pri posodabljanju igralca",
+      "deleteError": "Napaka pri brisanju igralca"
+    }
+  }
+}

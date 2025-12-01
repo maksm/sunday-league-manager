@@ -1,0 +1,24 @@
+{
+  "hero": {
+    "title": "Sunday League Manager",
+    "subtitle": "Your complete platform for managing Sunday football. Track stats, organize teams, and compete for glory.",
+    "cta": {
+      "register": "Register",
+      "signIn": "Sign In"
+    }
+  },
+  "upcomingFixtures": {
+    "title": "Upcoming Fixtures",
+    "viewAll": "View all matches →",
+    "matchday": "Matchday"
+  },
+  "leagueHighlights": {
+    "title": "League Highlights",
+    "stats": {
+      "totalMatches": "Total Matches",
+      "goalsScored": "Goals Scored",
+      "activeTeams": "Active Teams",
+      "registeredPlayers": "Registered Players"
+    }
+  }
+}

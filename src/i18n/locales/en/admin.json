@@ -1,0 +1,40 @@
+{
+  "title": "Admin Dashboard",
+  "subtitle": "Manage players and shadow profiles",
+  "createShadowPlayer": {
+    "title": "Create Shadow Player",
+    "description": "Manage player profiles. You can create shadow profiles for players who haven't registered yet.",
+    "placeholder": "Player Name",
+    "submit": "Create Player",
+    "submitting": "Creating...",
+    "errors": {
+      "createFailed": "Failed to create player",
+      "createError": "Error creating player"
+    }
+  },
+  "playerList": {
+    "title": "All Players",
+    "headers": {
+      "name": "Name",
+      "elo": "Elo",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "status": {
+      "registered": "Registered",
+      "shadow": "Shadow"
+    }
+  },
+  "playerActions": {
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirmDelete": "Are you sure you want to delete {name}?",
+    "errors": {
+      "updateFailed": "Failed to update player",
+      "updateError": "Error updating player",
+      "deleteError": "Error deleting player"
+    }
+  }
+}

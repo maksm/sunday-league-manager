@@ -1,0 +1,181 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+
+  username      String    @unique
+  passwordHash  String
+  role          String    @default("USER") // "ADMIN" or "USER"
+  player        Player?
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Player {
+  id            String    @id @default(cuid())
+  name          String
+
+  matchesPlayed Int       @default(0)
+  goals         Int       @default(0)
+  assists       Int       @default(0)
+  motmCount     Int       @default(0)
+  form          String    @default("") // "W,L,D" comma separated
+  isActive      Boolean   @default(true)
+
+  userId        String?   @unique
+  user          User?     @relation(fields: [userId], references: [id])
+
+  matchStats    MatchStat[]
+  rsvps         RSVP[]
+  votesCast     Vote[]    @relation("Voter")
+  votesReceived Vote[]    @relation("VoteTarget")
+
+  events        MatchEvent[] @relation("EventPlayer")
+  assistsEvents MatchEvent[] @relation("EventAssist")
+  subOutEvents  MatchEvent[] @relation("EventSubOut")
+  teams         MatchdayTeam[]
+
+  // Implicit relations for teams history if needed, or just rely on MatchStat
+
+  @@index([name])
+  @@index([isActive])
+}
+
+model Season {
+  id        String   @id @default(cuid())
+  name      String
+  startDate DateTime
+  endDate   DateTime
+  location  String
+  matchday  String   // Day of week (e.g., "FRIDAY")
+  startHour String   // Match start time (e.g., "20:00")
+  endHour   String   // Match end time (e.g., "21:30")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  matchdays Matchday[]
+
+  @@index([startDate])
+  @@index([endDate])
+}
+
+model Matchday {
+  id        String   @id @default(cuid())
+  date      DateTime
+  startTime DateTime? // Specific start time for this matchday
+  endTime   DateTime? // Specific end time for this matchday
+  status    String   @default("SCHEDULED") // SCHEDULED, COMPLETED
+
+  seasonId  String?
+  season    Season?  @relation(fields: [seasonId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  matches   Match[]
+  rsvps     RSVP[]
+  votes     Vote[]
+  teams     MatchdayTeam[]
+
+  @@index([date])
+  @@index([status])
+  @@index([seasonId])
+}
+
+model MatchdayTeam {
+  id        String   @id @default(cuid())
+  name      String
+  color     String?
+  
+  matchdayId String
+  matchday   Matchday @relation(fields: [matchdayId], references: [id], onDelete: Cascade)
+  
+  players    Player[]
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Match {
+  id        String   @id @default(cuid())
+  matchdayId String
+  
+  result    String?  // "A-B" e.g. "5-4"
+  
+  matchday  Matchday @relation(fields: [matchdayId], references: [id], onDelete: Cascade)
+  stats     MatchStat[]
+  events    MatchEvent[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RSVP {
+  id        String   @id @default(cuid())
+  matchdayId String
+  playerId  String
+  status    String   // "IN", "IN_BEER", "OUT", "OUT_INJURED", "MAYBE"
+  
+  matchday  Matchday @relation(fields: [matchdayId], references: [id], onDelete: Cascade)
+  player    Player   @relation(fields: [playerId], references: [id])
+  
+  @@unique([matchdayId, playerId])
+}
+
+model MatchStat {
+  id        String   @id @default(cuid())
+  matchId   String
+  playerId  String
+  
+  goals     Int      @default(0)
+  assists   Int      @default(0)
+  team      String   // "A" or "B"
+  isMotm    Boolean  @default(false)
+  
+  match     Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  player    Player   @relation(fields: [playerId], references: [id])
+  
+  @@unique([matchId, playerId])
+}
+
+model Vote {
+  id        String   @id @default(cuid())
+  matchdayId String
+  voterId   String
+  targetId  String
+  
+  matchday  Matchday @relation(fields: [matchdayId], references: [id], onDelete: Cascade)
+  voter     Player   @relation("Voter", fields: [voterId], references: [id])
+  target    Player   @relation("VoteTarget", fields: [targetId], references: [id])
+
+  @@unique([matchdayId, voterId])
+}
+
+model MatchEvent {
+  id        String   @id @default(cuid())
+  matchId   String
+  
+  type      String   // "START", "GOAL", "SUB", "END"
+  playerId  String?  // For GOAL (scorer) or SUB (player coming ON)
+  assistId  String?  // For GOAL
+  subOutId  String?  // For SUB (player going OFF)
+  team      String?  // "A" or "B" (useful for goals)
+  timestamp DateTime @default(now())
+  
+  match     Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  player    Player?  @relation("EventPlayer", fields: [playerId], references: [id])
+  assist    Player?  @relation("EventAssist", fields: [assistId], references: [id])
+  subOut    Player?  @relation("EventSubOut", fields: [subOutId], references: [id])
+}
