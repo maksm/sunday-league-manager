@@ -15,6 +15,8 @@ export async function POST(req: Request) {
     return authResult.response;
   }
 
+  let matchdayId: string | undefined;
+
   try {
     const body = await req.json();
 
@@ -24,7 +26,8 @@ export async function POST(req: Request) {
       return errorResponse(validation.error, 400);
     }
 
-    const { matchdayId, status } = validation.data;
+    const { status } = validation.data;
+    matchdayId = validation.data.matchdayId;
 
     // Verify matchday exists and is not already played
     const matchday = await prisma.matchday.findUnique({

@@ -41,23 +41,26 @@ test.describe('User Authentication', () => {
     await page.locator('input[type="password"]').fill(password);
 
     // Intercept the registration request to capture the response
-    let registrationUsername = '';
-    page.on('response', async (response) => {
-      if (response.url().includes('/api/register') && response.status() === 201) {
-        try {
-          const body = await response.json();
-          registrationUsername = body.user.username;
-        } catch (e) {
-          console.error('Failed to parse register response:', e);
-        }
-      }
-    });
+    // Setup wait for response before clicking
+    const responsePromise = page.waitForResponse(
+      (response) => response.url().includes('/api/register') && response.status() === 201
+    );
 
     // Submit
     await page
       .locator('button')
       .filter({ hasText: /Create Account|Ustvari račun/i })
       .click();
+
+    // Wait for the response
+    let registrationUsername = '';
+    try {
+      const response = await responsePromise;
+      const body = await response.json();
+      registrationUsername = body.user.username;
+    } catch (e) {
+      console.error('Failed to capture register response:', e);
+    }
 
     // Wait a moment for the response to be captured
     await new Promise((resolve) => setTimeout(resolve, 100));
@@ -95,21 +98,23 @@ test.describe('User Authentication', () => {
     await page.locator('input[type="password"]').fill(password);
 
     // Intercept registration response to get actual username
-    page.on('response', async (response) => {
-      if (response.url().includes('/api/register') && response.status() === 201) {
-        try {
-          const body = await response.json();
-          actualUsername = body.user.username;
-        } catch (e) {
-          console.error('Failed to parse register response:', e);
-        }
-      }
-    });
+    // Setup wait for response before clicking
+    const responsePromise = page.waitForResponse(
+      (response) => response.url().includes('/api/register') && response.status() === 201
+    );
 
     await page
       .locator('button')
       .filter({ hasText: /Create Account|Ustvari račun/i })
       .click();
+
+    try {
+      const response = await responsePromise;
+      const body = await response.json();
+      actualUsername = body.user.username;
+    } catch (e) {
+      console.error('Failed to capture register response:', e);
+    }
 
     // Wait for response to be captured
     await new Promise((resolve) => setTimeout(resolve, 100));

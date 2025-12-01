@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Matchday, Season } from '@/types/api';
-import styles from './page.module.css';
+import styles from '../page.module.css';
 import Modal from './Modal';
 import MatchdayActions from './MatchdayActions';
 

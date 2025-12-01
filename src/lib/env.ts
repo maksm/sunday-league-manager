@@ -14,7 +14,7 @@ const envSchema = z.object({
 
   // Public environment variables
   NEXT_PUBLIC_LOCALE: z.enum(['en', 'sl'], {
-    errorMap: () => ({ message: 'NEXT_PUBLIC_LOCALE must be either "en" or "sl"' }),
+    message: 'NEXT_PUBLIC_LOCALE must be either "en" or "sl"',
   }),
   NEXT_PUBLIC_APP_NAME: z.string().optional(),
 

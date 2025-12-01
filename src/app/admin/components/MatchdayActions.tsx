@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import styles from './SeasonActions.module.css'; // Reusing styles
-import pageStyles from './page.module.css';
+import pageStyles from '../page.module.css';
 import { Matchday, Season } from '@/types/api';
 import ConfirmModal from './ConfirmModal';
 import Modal from './Modal';

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Season, CreateSeasonRequest } from '@/types/api';
-import styles from './page.module.css';
+import styles from '../page.module.css';
 import SeasonActions from './SeasonActions';
 import Modal from './Modal';
 
