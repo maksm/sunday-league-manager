@@ -44,19 +44,23 @@ export default async function Home() {
       })
     : [];
 
-  const upcomingMatches = upcomingMatchdays.map((matchday, index) => ({
-    id: matchday.id,
-    homeTeam: 'Team A',
-    awayTeam: 'Team B',
-    date: new Date(matchday.date).toLocaleDateString(locale, {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'short',
-    }),
-    time: matchday.season?.startHour || '15:00',
-    venue: matchday.season?.location || 'TBD',
-    matchday: `Matchday ${index + 1}`,
-  }));
+  const upcomingMatches = upcomingMatchdays.map((matchday, index) => {
+    // Alternate home/away each matchday
+    const isBeliBaletHome = index % 2 === 0;
+    return {
+      id: matchday.id,
+      homeTeam: isBeliBaletHome ? 'Beli Balet' : 'Cika Internazionale',
+      awayTeam: isBeliBaletHome ? 'Cika Internazionale' : 'Beli Balet',
+      date: new Date(matchday.date).toLocaleDateString(locale, {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'short',
+      }),
+      time: matchday.season?.startHour || '15:00',
+      venue: matchday.season?.location || 'TBD',
+      matchday: `Matchday ${index + 1}`,
+    };
+  });
 
   return (
     <div className={styles.container}>
