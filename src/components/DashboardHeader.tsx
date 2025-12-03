@@ -31,17 +31,6 @@ export default async function DashboardHeader() {
             {process.env.NEXT_PUBLIC_APP_NAME || (dashboard.title as string) || 'Sunday League'}
           </Link>
         </h1>
-        <nav className={styles.nav}>
-          <Link href="/dashboard" className={styles.navLink}>
-            Dashboard
-          </Link>
-          <Link href="/dashboard/history" className={styles.navLink}>
-            History
-          </Link>
-          <Link href="/dashboard/live" className={styles.navLink}>
-            Live
-          </Link>
-        </nav>
       </div>
       <div className={styles.right}>
         <UserMenu userName={userPlayerName} userRole={userRole} />
