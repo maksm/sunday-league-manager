@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { prisma } from '@/lib/prisma';
+import type { Player, MatchStat, MatchEvent } from '@prisma/client';
 import styles from '../page.module.css';
 import LiveMatchReporter from '@/components/LiveMatchReporter';
 import MatchFeed from '@/components/MatchFeed';
@@ -54,7 +55,7 @@ export default async function LivePage() {
     );
   }
 
-  const rsvpedPlayers = currentMatchday.rsvps.map((r: { player: unknown }) => r.player);
+  const rsvpedPlayers = currentMatchday.rsvps.map((r: { player: Player }) => r.player);
 
   // Fetch all active players for the team builder (including non-RSVP'd)
   const allActivePlayers = await prisma.player.findMany({
@@ -63,7 +64,7 @@ export default async function LivePage() {
   });
 
   const allEvents = currentMatchday.matches
-    .flatMap((m: { events: unknown[] }) => m.events)
+    .flatMap((m: { events: MatchEvent[] }) => m.events)
     .sort(
       (a: { timestamp: Date }, b: { timestamp: Date }) =>
         new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
@@ -103,7 +104,7 @@ export default async function LivePage() {
               </div>
             )}
 
-            {currentMatchday.matches.map((match: { id: string; stats: unknown[] }) => (
+            {currentMatchday.matches.map((match: { id: string; stats: MatchStat[] }) => (
               <div
                 key={match.id}
                 style={{

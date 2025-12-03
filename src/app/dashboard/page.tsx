@@ -1,5 +1,6 @@
 import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
+import type { Player } from '@prisma/client';
 import { redirect } from 'next/navigation';
 import Image from 'next/image';
 import MatchdayCard from './MatchdayCard';
@@ -134,7 +135,7 @@ export default async function DashboardPage() {
         {showVoting && (
           <VotingCard
             gameId={lastMatchday.id} // VotingCard likely needs update too, but passing ID for now
-            players={lastMatchday.rsvps.map((r: { player: unknown }) => r.player)}
+            players={lastMatchday.rsvps.map((r: { player: Player }) => r.player)}
           />
         )}
 
