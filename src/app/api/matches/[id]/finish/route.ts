@@ -77,7 +77,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
 
         // Update all players in parallel
         await Promise.all(
-          players.map(async (player) => {
+          players.map(async (player: { id: string; form: string | null }) => {
             const currentForm = player.form ? player.form.split(',') : [];
             const newForm = [formResult, ...currentForm].slice(0, 5).join(',');
 

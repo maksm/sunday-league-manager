@@ -54,7 +54,7 @@ export default async function LivePage() {
     );
   }
 
-  const rsvpedPlayers = currentMatchday.rsvps.map((r) => r.player);
+  const rsvpedPlayers = currentMatchday.rsvps.map((r: { player: unknown }) => r.player);
 
   // Fetch all active players for the team builder (including non-RSVP'd)
   const allActivePlayers = await prisma.player.findMany({
@@ -63,8 +63,11 @@ export default async function LivePage() {
   });
 
   const allEvents = currentMatchday.matches
-    .flatMap((m) => m.events)
-    .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+    .flatMap((m: { events: unknown[] }) => m.events)
+    .sort(
+      (a: { timestamp: Date }, b: { timestamp: Date }) =>
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    );
 
   return (
     <div className={styles.container}>
@@ -100,7 +103,7 @@ export default async function LivePage() {
               </div>
             )}
 
-            {currentMatchday.matches.map((match) => (
+            {currentMatchday.matches.map((match: { id: string; stats: unknown[] }) => (
               <div
                 key={match.id}
                 style={{

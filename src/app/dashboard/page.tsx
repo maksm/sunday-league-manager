@@ -50,27 +50,34 @@ export default async function DashboardPage() {
   });
 
   const confirmedCount =
-    nextMatchday?.rsvps?.filter((r) => r.status === 'IN' || r.status === 'IN_BEER').length || 0;
+    nextMatchday?.rsvps?.filter(
+      (r: { status: string }) => r.status === 'IN' || r.status === 'IN_BEER'
+    ).length || 0;
   const declinedCount =
-    nextMatchday?.rsvps?.filter((r) => r.status === 'OUT' || r.status === 'OUT_INJURED').length ||
-    0;
+    nextMatchday?.rsvps?.filter(
+      (r: { status: string }) => r.status === 'OUT' || r.status === 'OUT_INJURED'
+    ).length || 0;
 
-  const attendingPlayerIds = new Set(
+  const attendingPlayerIds = new Set<string>(
     nextMatchday?.rsvps
-      ?.filter((r) => r.status === 'IN' || r.status === 'IN_BEER')
-      .map((r) => r.playerId) || []
+      ?.filter((r: { status: string }) => r.status === 'IN' || r.status === 'IN_BEER')
+      .map((r: { playerId: string }) => r.playerId) || []
   );
-  const beerPlayerIds = new Set(
-    nextMatchday?.rsvps?.filter((r) => r.status === 'IN_BEER').map((r) => r.playerId) || []
+  const beerPlayerIds = new Set<string>(
+    nextMatchday?.rsvps
+      ?.filter((r: { status: string }) => r.status === 'IN_BEER')
+      .map((r: { playerId: string }) => r.playerId) || []
   );
 
-  const declinedPlayerIds = new Set(
+  const declinedPlayerIds = new Set<string>(
     nextMatchday?.rsvps
-      ?.filter((r) => r.status === 'OUT' || r.status === 'OUT_INJURED')
-      .map((r) => r.playerId) || []
+      ?.filter((r: { status: string }) => r.status === 'OUT' || r.status === 'OUT_INJURED')
+      .map((r: { playerId: string }) => r.playerId) || []
   );
-  const injuredPlayerIds = new Set(
-    nextMatchday?.rsvps?.filter((r) => r.status === 'OUT_INJURED').map((r) => r.playerId) || []
+  const injuredPlayerIds = new Set<string>(
+    nextMatchday?.rsvps
+      ?.filter((r: { status: string }) => r.status === 'OUT_INJURED')
+      .map((r: { playerId: string }) => r.playerId) || []
   );
 
   // Fetch Last Played Matchday (for Voting) - within last 24h
@@ -127,7 +134,7 @@ export default async function DashboardPage() {
         {showVoting && (
           <VotingCard
             gameId={lastMatchday.id} // VotingCard likely needs update too, but passing ID for now
-            players={lastMatchday.rsvps.map((r) => r.player)}
+            players={lastMatchday.rsvps.map((r: { player: unknown }) => r.player)}
           />
         )}
 

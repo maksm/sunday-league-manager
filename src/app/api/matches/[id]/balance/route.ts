@@ -62,7 +62,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
 
       // Create match stats for team A
       await Promise.all(
-        teamA.map((player) =>
+        teamA.map((player: { id: string }) =>
           tx.matchStat.create({
             data: {
               matchId: id,
@@ -77,7 +77,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
 
       // Create match stats for team B
       await Promise.all(
-        teamB.map((player) =>
+        teamB.map((player: { id: string }) =>
           tx.matchStat.create({
             data: {
               matchId: id,
