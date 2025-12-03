@@ -90,6 +90,29 @@ export default async function Home() {
                 }
               </Link>
             </div>
+
+            {/* League Highlights */}
+            <div className={styles.heroStats}>
+              <div className={styles.heroStatItem}>
+                <div className={styles.heroStatValue}>20+</div>
+                <div className={styles.heroStatLabel}>let tradicije</div>
+              </div>
+              <div className={styles.heroStatDivider}></div>
+              <div className={styles.heroStatItem}>
+                <div className={styles.heroStatValue}>25+</div>
+                <div className={styles.heroStatLabel}>petkov</div>
+              </div>
+              <div className={styles.heroStatDivider}></div>
+              <div className={styles.heroStatItem}>
+                <div className={styles.heroStatValue}>1</div>
+                <div className={styles.heroStatLabel}>večni derby</div>
+              </div>
+              <div className={styles.heroStatDivider}></div>
+              <div className={styles.heroStatItem}>
+                <div className={styles.heroStatValue}>30+</div>
+                <div className={styles.heroStatLabel}>registriranih igralcev</div>
+              </div>
+            </div>
           </div>
         </div>
       </main>
@@ -160,53 +183,6 @@ export default async function Home() {
               </div>
             </div>
           ))}
-        </div>
-      </section>
-
-      <section className={styles.statsSection}>
-        <h2 className={styles.sectionTitle}>
-          {
-            ((home.leagueHighlights as Record<string, string>)?.title ||
-              'League Highlights') as string
-          }
-        </h2>
-        <div className={styles.statsGrid}>
-          <div className={styles.statCard}>
-            <div className={styles.statValue}>248</div>
-            <div className={styles.statLabel}>
-              {
-                ((home.leagueHighlights as Record<string, Record<string, string>>)?.stats
-                  ?.totalMatches || 'Total Matches') as string
-              }
-            </div>
-          </div>
-          <div className={styles.statCard}>
-            <div className={styles.statValue}>1,847</div>
-            <div className={styles.statLabel}>
-              {
-                ((home.leagueHighlights as Record<string, Record<string, string>>)?.stats
-                  ?.goalsScored || 'Goals Scored') as string
-              }
-            </div>
-          </div>
-          <div className={styles.statCard}>
-            <div className={styles.statValue}>32</div>
-            <div className={styles.statLabel}>
-              {
-                ((home.leagueHighlights as Record<string, Record<string, string>>)?.stats
-                  ?.activeTeams || 'Active Teams') as string
-              }
-            </div>
-          </div>
-          <div className={styles.statCard}>
-            <div className={styles.statValue}>584</div>
-            <div className={styles.statLabel}>
-              {
-                ((home.leagueHighlights as Record<string, Record<string, string>>)?.stats
-                  ?.registeredPlayers || 'Registered Players') as string
-              }
-            </div>
-          </div>
         </div>
       </section>
     </div>

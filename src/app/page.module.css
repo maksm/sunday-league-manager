@@ -18,6 +18,7 @@
   background-size: cover;
   background-position: center;
   overflow: hidden;
+  padding-bottom: 20px;
 }
 
 /* Starball pattern */
@@ -153,6 +154,47 @@
   border-color: var(--primary);
   color: var(--primary);
   transform: translateY(-2px);
+}
+
+/* Hero Stats */
+.heroStats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
+  max-width: 900px;
+  width: 100%;
+}
+
+.heroStatItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.heroStatValue {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.heroStatLabel {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.3;
+  font-weight: 500;
+}
+
+.heroStatDivider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 215, 0, 0.2);
 }
 
 /* Matches Section */
@@ -316,55 +358,6 @@
   font-size: 1rem;
 }
 
-/* Stats Section */
-.statsSection {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 4rem 2rem;
-  background: linear-gradient(135deg, var(--card-bg) 0%, var(--bg-dark) 100%);
-}
-
-.statsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-
-.statCard {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  padding: 2rem 1.5rem;
-  text-align: center;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.statCard:hover {
-  border-color: var(--primary);
-  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.15);
-}
-
-.statValue {
-  font-size: 3.5rem;
-  font-weight: 800;
-  color: var(--primary);
-  margin-bottom: 0.5rem;
-  position: relative;
-  z-index: 1;
-}
-
-.statLabel {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 600;
-  position: relative;
-  z-index: 1;
-}
-
 /* Responsive Design */
 @media (max-width: 1024px) {
   .matchesGrid {
@@ -402,6 +395,24 @@
     text-align: center;
   }
 
+  .heroStats {
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+
+  .heroStatValue {
+    font-size: 1.5rem;
+  }
+
+  .heroStatLabel {
+    font-size: 0.75rem;
+  }
+
+  .heroStatDivider {
+    height: 30px;
+  }
+
   .matchesGrid {
     grid-template-columns: 1fr;
   }
@@ -412,16 +423,7 @@
     gap: 1rem;
   }
 
-  .statsGrid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  }
-
-  .statValue {
-    font-size: 2.5rem;
-  }
-
-  .matchesSection,
-  .statsSection {
+  .matchesSection {
     padding: 3rem 1rem;
   }
 }
@@ -435,6 +437,29 @@
     font-size: 2rem;
   }
 
+  .heroStats {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+  }
+
+  .heroStatItem {
+    flex: 1 1 40%;
+    min-width: 100px;
+  }
+
+  .heroStatValue {
+    font-size: 1.25rem;
+  }
+
+  .heroStatLabel {
+    font-size: 0.7rem;
+  }
+
+  .heroStatDivider {
+    display: none;
+  }
+
   .teamBadge {
     width: 60px;
     height: 60px;
@@ -443,9 +468,5 @@
 
   .teamName {
     font-size: 0.875rem;
-  }
-
-  .statsGrid {
-    grid-template-columns: 1fr 1fr;
   }
 }
