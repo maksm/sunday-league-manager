@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { hash } from 'bcryptjs';
 import { validateRequest, registerSchema } from '@/lib/validation';
@@ -86,7 +87,7 @@ export async function POST(req: Request) {
     const passwordHash = await hash(password, 12);
 
     // Use transaction to ensure atomicity
-    const user = await prisma.$transaction(async (tx) => {
+    const user = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       if (playerId) {
         // Claim existing player and reactivate if inactive
         await tx.player.update({

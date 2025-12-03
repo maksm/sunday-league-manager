@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { requireAdmin, errorResponse, successResponse } from '@/lib/auth-helpers';
 import { validateRequest, finishMatchSchema } from '@/lib/validation';
@@ -40,7 +41,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     const winner = scoreA > scoreB ? 'A' : scoreA < scoreB ? 'B' : 'DRAW';
 
     // Use transaction to ensure atomicity
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       // Update match result
       await tx.match.update({
         where: { id },

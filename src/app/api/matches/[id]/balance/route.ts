@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { requireAdmin, errorResponse, successResponse } from '@/lib/auth-helpers';
 import { authOptions } from '../../../auth/[...nextauth]/route';
@@ -53,7 +54,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     const teamB = players.slice(mid);
 
     // Save team assignments to MatchStat table
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       // Delete existing match stats for this match
       await tx.matchStat.deleteMany({
         where: { matchId: id },
