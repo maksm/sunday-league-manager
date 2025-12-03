@@ -25,7 +25,7 @@ export default function MatchLineupEditor({
   initialStats,
   allPlayers,
 }: MatchLineupEditorProps) {
-  const [stats, setStats] = useState<MatchStat[]>(initialStats);
+  const [stats] = useState<MatchStat[]>(initialStats);
   const [loading, setLoading] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const router = useRouter();

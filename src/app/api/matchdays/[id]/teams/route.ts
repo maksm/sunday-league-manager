@@ -62,7 +62,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const { id: matchdayId } = await params;
+  await params;
   const body = await request.json();
   const { teamId, playerIds } = body;
 

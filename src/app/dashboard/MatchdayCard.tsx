@@ -27,7 +27,6 @@ export default function MatchdayCard({
   initialRsvpStatus,
   confirmedCount,
   declinedCount,
-  userRole,
 }: MatchdayCardProps) {
   const [status, setStatus] = useState(initialRsvpStatus);
   const [loading, setLoading] = useState(false);
@@ -56,8 +55,6 @@ export default function MatchdayCard({
       setLoading(false);
     }
   };
-
-  const defaultMatch = matchday.matches?.[0];
 
   return (
     <section className={styles.card}>

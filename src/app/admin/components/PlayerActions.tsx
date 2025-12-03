@@ -30,7 +30,6 @@ export default function PlayerActions({ player, onUpdate, onDelete }: Props) {
 
   const dict = useTranslations();
   const actions = (dict.admin as Record<string, unknown>).playerActions as Record<string, unknown>;
-  const common = dict.common as Record<string, string>;
 
   const showError = (message: string) => {
     setErrorMessage(message);

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   DndContext,
   closestCenter,
@@ -9,13 +9,11 @@ import {
   useSensor,
   useSensors,
   DragOverlay,
-  defaultDropAnimationSideEffects,
   DragStartEvent,
   DragOverEvent,
   DragEndEvent,
 } from '@dnd-kit/core';
 import {
-  arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
@@ -97,18 +95,14 @@ export default function TeamBuilder({
   allPlayers,
   initialTeams,
 }: TeamBuilderProps) {
-  const [availablePlayers, setAvailablePlayers] = useState<Player[]>(initialPlayers);
+  // Initialize available players by filtering out already assigned ones
+  const [availablePlayers, setAvailablePlayers] = useState<Player[]>(() => {
+    const assignedPlayerIds = new Set(initialTeams.flatMap((t) => t.players.map((p) => p.id)));
+    return initialPlayers.filter((p) => !assignedPlayerIds.has(p.id));
+  });
   const [teams, setTeams] = useState<Team[]>(initialTeams);
   const [searchTerm, setSearchTerm] = useState('');
-  const [isSaving, setIsSaving] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
-
-  // Initialize available players
-  useEffect(() => {
-    const assignedPlayerIds = new Set(initialTeams.flatMap((t) => t.players.map((p) => p.id)));
-    setAvailablePlayers(initialPlayers.filter((p) => !assignedPlayerIds.has(p.id)));
-    setTeams(initialTeams);
-  }, [initialPlayers, initialTeams]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -276,21 +270,6 @@ export default function TeamBuilder({
       return a.name.localeCompare(b.name);
     });
   }, [availablePlayers, allPlayers, teams, searchTerm, initialPlayers]);
-
-  const saveTeams = async () => {
-    setIsSaving(true);
-    try {
-      // We can just rely on the individual updates, or implement a bulk save if needed.
-      // Since we update on drag end, this button might be redundant or just a "Sync" button.
-      // But let's keep it as a placebo or for bulk confirmation if we change logic.
-      // For now, let's just say "Saved" since we auto-save.
-      alert('Teams are auto-saved on change.');
-    } catch (error) {
-      console.error('Failed to save teams:', error);
-    } finally {
-      setIsSaving(false);
-    }
-  };
 
   // Helper for the "Available" droppable area
   const { setNodeRef: setUnassignedNodeRef } = useSortable({

@@ -5,7 +5,6 @@ import Image from 'next/image';
 import MatchdayCard from './MatchdayCard';
 
 import VotingCard from './VotingCard';
-import UserMenu from './UserMenu';
 import { authOptions } from '../api/auth/[...nextauth]/route';
 import styles from './page.module.css';
 import { getLocale } from '@/i18n/config';

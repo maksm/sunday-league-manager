@@ -9,7 +9,6 @@ test.describe('Admin Functions', () => {
   const shadowPlayerName = `Shadow Player ${timestamp}`;
   const updatedShadowPlayerName = `Updated Shadow ${timestamp}`;
 
-  let adminUserId: string | null = null;
   let actualAdminUsername: string | null = null;
 
   test.afterEach(async () => {
@@ -93,8 +92,6 @@ test.describe('Admin Functions', () => {
       throw new Error(`User ${usernameToLookup} not found in DB`);
     }
 
-    // Store user ID for cleanup
-    adminUserId = user.id;
     actualAdminUsername = user.username;
 
     await prisma.user.update({
@@ -240,8 +237,6 @@ test.describe('Admin Functions', () => {
     }
     if (!user) throw new Error(`User ${usernameToLookup} not found`);
 
-    // Track for cleanup
-    adminUserId = user.id;
     actualAdminUsername = user.username;
 
     await prisma.user.update({ where: { id: user.id }, data: { role: 'ADMIN' } });
