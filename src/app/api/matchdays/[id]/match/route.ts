@@ -35,12 +35,12 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
 
       if (teamA && teamB) {
         const statsData = [
-          ...teamA.players.map((p) => ({
+          ...teamA.players.map((p: { id: string }) => ({
             matchId: match.id,
             playerId: p.id,
             team: 'A',
           })),
-          ...teamB.players.map((p) => ({
+          ...teamB.players.map((p: { id: string }) => ({
             matchId: match.id,
             playerId: p.id,
             team: 'B',

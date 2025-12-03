@@ -83,7 +83,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
       where: { seasonId: id },
       select: { id: true },
     });
-    const matchdayIds = matchdays.map((m) => m.id);
+    const matchdayIds = matchdays.map((m: { id: string }) => m.id);
 
     // Delete all associated data in a transaction
     await prisma.$transaction([
