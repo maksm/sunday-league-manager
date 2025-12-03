@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
+import { prisma } from '@/lib/prisma';
 import styles from './page.module.css';
 import { getLocale } from '@/i18n/config';
 import { getDictionary } from '@/i18n/get-dictionary';
@@ -17,62 +18,45 @@ export default async function Home() {
   const dict = await getDictionary(locale);
   const home = dict.home as Record<string, unknown>;
   const common = dict.common as Record<string, unknown>;
-  const upcomingMatches = [
-    {
-      id: 1,
-      homeTeam: 'FC Lions',
-      awayTeam: 'United Warriors',
-      date: 'Sunday, 24 Nov',
-      time: '15:00',
-      venue: 'Central Stadium',
-      matchday: 'Matchday 12',
+
+  // Fetch current season
+  const currentSeason = await prisma.season.findFirst({
+    where: {
+      startDate: { lte: new Date() },
+      endDate: { gte: new Date() },
     },
-    {
-      id: 2,
-      homeTeam: 'Rangers FC',
-      awayTeam: 'City Strikers',
-      date: 'Sunday, 24 Nov',
-      time: '17:30',
-      venue: 'Riverside Ground',
-      matchday: 'Matchday 12',
-    },
-    {
-      id: 3,
-      homeTeam: 'Athletic Club',
-      awayTeam: 'Phoenix United',
-      date: 'Sunday, 1 Dec',
-      time: '14:00',
-      venue: 'Victory Park',
-      matchday: 'Matchday 13',
-    },
-    {
-      id: 4,
-      homeTeam: 'Eagles FC',
-      awayTeam: 'Thunder FC',
-      date: 'Sunday, 1 Dec',
-      time: '16:00',
-      venue: 'North Field',
-      matchday: 'Matchday 13',
-    },
-    {
-      id: 5,
-      homeTeam: 'Titans SC',
-      awayTeam: 'Victory FC',
-      date: 'Sunday, 8 Dec',
-      time: '15:30',
-      venue: 'Champions Arena',
-      matchday: 'Matchday 14',
-    },
-    {
-      id: 6,
-      homeTeam: 'Dynamo FC',
-      awayTeam: 'Sporting Club',
-      date: 'Sunday, 8 Dec',
-      time: '18:00',
-      venue: 'East Stadium',
-      matchday: 'Matchday 14',
-    },
-  ];
+    orderBy: { startDate: 'desc' },
+  });
+
+  // Fetch next 4 matchdays from current season
+  const upcomingMatchdays = currentSeason
+    ? await prisma.matchday.findMany({
+        where: {
+          seasonId: currentSeason.id,
+          date: { gte: new Date() },
+          status: 'SCHEDULED',
+        },
+        orderBy: { date: 'asc' },
+        take: 4,
+        include: {
+          season: true,
+        },
+      })
+    : [];
+
+  const upcomingMatches = upcomingMatchdays.map((matchday, index) => ({
+    id: matchday.id,
+    homeTeam: 'Team A',
+    awayTeam: 'Team B',
+    date: new Date(matchday.date).toLocaleDateString(locale, {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'short',
+    }),
+    time: matchday.season?.startHour || '15:00',
+    venue: matchday.season?.location || 'TBD',
+    matchday: `Matchday ${index + 1}`,
+  }));
 
   return (
     <div className={styles.container}>
