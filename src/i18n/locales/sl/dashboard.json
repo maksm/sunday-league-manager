@@ -1,12 +1,16 @@
 {
   "title": "Sunday League",
   "leaderboard": {
-    "title": "Igralci",
+    "title": "Zadnje formacije",
     "headers": {
       "rank": "Mesto",
       "player": "Igralec",
       "elo": "Elo",
       "form": "Forma"
+    },
+    "teams": {
+      "freeAgents": "💰 Prost agent",
+      "bench": "🪑 Klop"
     }
   },
   "noGames": "Ni načrtovanih prihodnjih tekem.",
@@ -20,14 +24,24 @@
       "statusLabel": "Trenutno ste:",
       "attending": "Pridem",
       "attendingBeer": "Pridem in prinesem pive",
+      "attendingSuit": "Pridem lipu oblečen",
       "notAttending": "Ne pridem",
       "injured": "Poškodovan",
+      "injuredBeer": "Poškodovan in prinesem pive",
       "status": {
         "in": "Pridem ⚽",
         "inBeer": "Prinesem pive 🍺",
+        "inSuit": "Pridem lipu oblečen 🤵",
         "out": "Ne pridem ❌",
-        "outInjured": "Poškodovan"
-      }
+        "outInjured": "Poškodovan",
+        "outBeer": "Poškodovan in prinesem pive 🏥🍺"
+      },
+      "clear": "Počisti",
+      "clearTitle": "Počisti odgovor?",
+      "clearConfirm": "Ali ste prepričani, da želite počistiti svoj odgovor?",
+      "cancel": "Prekliči",
+      "confirmClear": "Počisti",
+      "clearing": "Čiščenje..."
     }
   },
   "votingCard": {
@@ -55,6 +69,7 @@
     }
   },
   "userMenu": {
+    "changeTeam": "Zamenjaj ekipo",
     "resetPassword": "Ponastavi geslo",
     "logout": "Odjava"
   },
@@ -74,5 +89,16 @@
       "passwordTooShort": "Geslo mora biti dolgo vsaj 6 znakov",
       "genericError": "Prišlo je do napake. Prosimo, poskusite znova."
     }
+  },
+  "changeTeamDialog": {
+    "title": "Zamenjaj ekipo",
+    "label": "Ekipa",
+    "freeAgent": "Prost agent",
+    "cancel": "Prekliči",
+    "submit": "Zamenjaj ekipo",
+    "submitting": "Posodabljanje...",
+    "successTitle": "Ekipa spremenjena!",
+    "successMessage": "Vaša ekipa je bila uspešno posodobljena.",
+    "error": "Napaka pri zamenjavi ekipe"
   }
 }

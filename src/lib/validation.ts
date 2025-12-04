@@ -7,6 +7,7 @@ export const registerSchema = z
     name: z.string().min(1).optional(),
     username: z.string().min(3, 'Username must be at least 3 characters').optional(),
     playerId: z.string().optional(),
+    teamId: z.string().nullable().optional(),
   })
   .refine((data) => data.name || data.playerId, {
     message: 'Either name or playerId must be provided',
@@ -15,7 +16,7 @@ export const registerSchema = z
 // RSVP validation
 export const rsvpSchema = z.object({
   matchdayId: z.string().min(1, 'Matchday ID is required'),
-  status: z.enum(['IN', 'IN_BEER', 'OUT', 'OUT_INJURED', 'MAYBE']),
+  status: z.enum(['IN', 'IN_BEER', 'IN_SUIT', 'OUT', 'OUT_INJURED', 'OUT_BEER', 'MAYBE']),
 });
 
 // Vote validation

@@ -6,7 +6,14 @@ export enum UserRole {
   ADMIN = 'ADMIN',
 }
 
-export type RSVPStatus = 'IN' | 'IN_BEER' | 'OUT' | 'OUT_INJURED' | 'MAYBE';
+export type RSVPStatus =
+  | 'IN'
+  | 'IN_BEER'
+  | 'IN_SUIT'
+  | 'OUT'
+  | 'OUT_INJURED'
+  | 'OUT_BEER'
+  | 'MAYBE';
 export type MatchdayStatus = 'SCHEDULED' | 'COMPLETED';
 export type Team = 'A' | 'B';
 

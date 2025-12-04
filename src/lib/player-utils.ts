@@ -12,12 +12,12 @@ export const calculatePlayerWeight = (
   return 3;
 };
 
-export const sortPlayers = (
-  players: Player[],
+export const sortPlayers = <T extends Player>(
+  players: T[],
   attendingPlayerIds: Set<string>,
   beerPlayerIds: Set<string>,
   declinedPlayerIds: Set<string>
-): Player[] => {
+): T[] => {
   return [...players].sort((a, b) => {
     const weightA = calculatePlayerWeight(
       a.id,

@@ -20,14 +20,24 @@
       "statusLabel": "You are currently:",
       "attending": "Attending",
       "attendingBeer": "Attending & Bringing Beers",
+      "attendingSuit": "Coming in Style",
       "notAttending": "Not Attending",
       "injured": "Injured",
+      "injuredBeer": "Injured & Bringing Beers",
       "status": {
         "in": "Attending ⚽",
         "inBeer": "Bringing Beers 🍺",
+        "inSuit": "Coming in Style 🤵",
         "out": "Not Attending ❌",
-        "outInjured": "Injured"
-      }
+        "outInjured": "Injured",
+        "outBeer": "Injured & Bringing Beers 🏥🍺"
+      },
+      "clear": "Clear",
+      "clearTitle": "Clear RSVP?",
+      "clearConfirm": "Are you sure you want to clear your response?",
+      "cancel": "Cancel",
+      "confirmClear": "Clear",
+      "clearing": "Clearing..."
     }
   },
   "votingCard": {

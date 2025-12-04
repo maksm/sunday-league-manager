@@ -14,7 +14,7 @@ export async function POST(req: Request) {
       return errorResponse(validation.error, 400);
     }
 
-    const { password, name, playerId, username: providedUsername } = validation.data;
+    const { password, name, playerId, username: providedUsername, teamId } = validation.data;
 
     // Generate Username: Name + First letter of Surname (or random if no surname)
     let baseName = name || '';
@@ -140,6 +140,7 @@ export async function POST(req: Request) {
             player: {
               create: {
                 name: name!,
+                teamId: teamId || null,
               },
             },
           },

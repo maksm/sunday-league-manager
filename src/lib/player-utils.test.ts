@@ -52,6 +52,7 @@ describe('player-utils', () => {
       form: '',
       isActive: true,
       userId: null,
+      teamId: null,
     });
 
     const players: Player[] = [

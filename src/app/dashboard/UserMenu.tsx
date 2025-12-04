@@ -4,17 +4,20 @@ import { useState, useRef, useEffect } from 'react';
 import { signOut } from 'next-auth/react';
 import { UserRole } from '@/types/api';
 import ResetPasswordDialog from './ResetPasswordDialog';
+import ChangeTeamModal from './ChangeTeamModal';
 import styles from './UserMenu.module.css';
 import { useTranslations } from '@/i18n/client';
 
 interface UserMenuProps {
   userName: string;
   userRole: UserRole;
+  teamId?: string | null;
 }
 
-export default function UserMenu({ userName, userRole }: UserMenuProps) {
+export default function UserMenu({ userName, userRole, teamId }: UserMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [showResetDialog, setShowResetDialog] = useState(false);
+  const [showChangeTeamModal, setShowChangeTeamModal] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const dict = useTranslations();
   const userMenu = dict.dashboard.userMenu as Record<string, string>;
@@ -42,6 +45,11 @@ export default function UserMenu({ userName, userRole }: UserMenuProps) {
   const handleResetPassword = () => {
     setIsOpen(false);
     setShowResetDialog(true);
+  };
+
+  const handleChangeTeam = () => {
+    setIsOpen(false);
+    setShowChangeTeamModal(true);
   };
 
   return (
@@ -101,6 +109,24 @@ export default function UserMenu({ userName, userRole }: UserMenuProps) {
                 {userMenu.adminPanel || 'Admin Panel'}
               </a>
             )}
+            <button className={styles.menuItem} onClick={handleChangeTeam} type="button">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 2L3 5V8C3 11 5.5 13.5 8 14.5C10.5 13.5 13 11 13 8V5L8 2Z"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              {userMenu.changeTeam || 'Change Team'}
+            </button>
             <button className={styles.menuItem} onClick={handleResetPassword} type="button">
               <svg
                 width="16"
@@ -142,6 +168,9 @@ export default function UserMenu({ userName, userRole }: UserMenuProps) {
       </div>
 
       {showResetDialog && <ResetPasswordDialog onClose={() => setShowResetDialog(false)} />}
+      {showChangeTeamModal && (
+        <ChangeTeamModal onClose={() => setShowChangeTeamModal(false)} currentTeamId={teamId} />
+      )}
     </>
   );
 }

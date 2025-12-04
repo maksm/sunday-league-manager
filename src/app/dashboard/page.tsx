@@ -123,10 +123,102 @@ export default async function DashboardPage() {
   // Fetch Players (Attending first, then alphabetical)
   const players = await prisma.player.findMany({
     where: { isActive: true },
+    include: { team: true },
     orderBy: { name: 'asc' },
   });
 
   const sortedPlayers = sortPlayers(players, attendingPlayerIds, beerPlayerIds, declinedPlayerIds);
+
+  // Get all unique teams
+  const teams = await prisma.team.findMany({
+    orderBy: { name: 'asc' },
+  });
+
+  // Group players by team, free agents, and bench
+  const rsvpedPlayerIds = new Set<string>(
+    nextMatchday?.rsvps?.map((r: { playerId: string }) => r.playerId) || []
+  );
+
+  const playersByTeam: Record<string, typeof players> = {};
+  const freeAgents: typeof players = [];
+  const benchPlayers: typeof players = [];
+
+  sortedPlayers.forEach((player) => {
+    // Check if player has RSVPed
+    if (!rsvpedPlayerIds.has(player.id)) {
+      benchPlayers.push(player);
+    } else if (player.teamId) {
+      if (!playersByTeam[player.teamId]) {
+        playersByTeam[player.teamId] = [];
+      }
+      playersByTeam[player.teamId].push(player);
+    } else {
+      freeAgents.push(player);
+    }
+  });
+
+  const renderPlayerRow = (player: (typeof players)[0], showTeamColumn: boolean = false) => {
+    const isAttending = attendingPlayerIds.has(player.id);
+    const isDeclined = declinedPlayerIds.has(player.id);
+    return (
+      <tr key={player.id}>
+        <td className={styles.playerName}>
+          {player.name}
+          {isAttending && (
+            <span className={styles.attendingBadge} title="Attending">
+              {beerPlayerIds.has(player.id) ? '🍺' : '⚽'}
+            </span>
+          )}
+          {isDeclined && (
+            <span className={styles.declinedBadge} title="Not attending">
+              {injuredPlayerIds.has(player.id) ? (
+                <Image src="/injury.png" alt="Injured" width={16} height={16} />
+              ) : (
+                '❌'
+              )}
+            </span>
+          )}
+        </td>
+        {showTeamColumn && (
+          <td className={styles.teamCell}>
+            {player.team ? (
+              <>
+                <span className={styles.teamBadge}>{player.team.badge}</span>
+                <span>{player.team.name}</span>
+              </>
+            ) : (
+              <>
+                <span className={styles.teamBadge}>💰</span>
+                <span className={styles.noTeam}>Prost agent</span>
+              </>
+            )}
+          </td>
+        )}
+        <td>
+          <div className={styles.formContainer}>
+            {player.form ? (
+              player.form.split(',').map((result: string, i: number) => (
+                <span
+                  key={i}
+                  className={`${styles.formBadge} ${
+                    result === 'W'
+                      ? styles.formBadgeW
+                      : result === 'L'
+                        ? styles.formBadgeL
+                        : styles.formBadgeD
+                  }`}
+                >
+                  {result}
+                </span>
+              ))
+            ) : (
+              <span className={styles.noForm}>-</span>
+            )}
+          </div>
+        </td>
+      </tr>
+    );
+  };
 
   return (
     <div className={styles.container}>
@@ -134,7 +226,7 @@ export default async function DashboardPage() {
         {/* Voting Section */}
         {showVoting && (
           <VotingCard
-            gameId={lastMatchday.id} // VotingCard likely needs update too, but passing ID for now
+            gameId={lastMatchday.id}
             players={lastMatchday.rsvps.map((r: { player: Player }) => r.player)}
           />
         )}
@@ -156,79 +248,112 @@ export default async function DashboardPage() {
           </div>
         )}
 
-        {/* Leaderboard */}
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>
-            {((dashboard.leaderboard as Record<string, string>)?.title || 'Leaderboard') as string}
+        {/* Formations by Team */}
+        <div className={styles.formationsWrapper}>
+          <h2 className={styles.mainTitle}>
+            {
+              ((dashboard.leaderboard as Record<string, string>)?.title ||
+                'Last Formations') as string
+            }
           </h2>
-          <table className={styles.leaderboardTable}>
-            <thead>
-              <tr>
-                <th>
-                  {
-                    ((dashboard.leaderboard as Record<string, Record<string, string>>)?.headers
-                      ?.player || 'Player') as string
-                  }
-                </th>
-                <th>
-                  {
-                    ((dashboard.leaderboard as Record<string, Record<string, string>>)?.headers
-                      ?.form || 'Form') as string
-                  }
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedPlayers.map((player) => {
-                const isAttending = attendingPlayerIds.has(player.id);
-                const isDeclined = declinedPlayerIds.has(player.id);
-                return (
-                  <tr key={player.id}>
-                    <td className={styles.playerName}>
-                      {player.name}
-                      {isAttending && (
-                        <span className={styles.attendingBadge} title="Attending">
-                          {beerPlayerIds.has(player.id) ? '🍺' : '⚽'}
-                        </span>
-                      )}
-                      {isDeclined && (
-                        <span className={styles.declinedBadge} title="Not attending">
-                          {injuredPlayerIds.has(player.id) ? (
-                            <Image src="/injury.png" alt="Injured" width={16} height={16} />
-                          ) : (
-                            '❌'
-                          )}
-                        </span>
-                      )}
-                    </td>
-                    <td>
-                      <div className={styles.formContainer}>
-                        {player.form ? (
-                          player.form.split(',').map((result: string, i: number) => (
-                            <span
-                              key={i}
-                              className={`${styles.formBadge} ${
-                                result === 'W'
-                                  ? styles.formBadgeW
-                                  : result === 'L'
-                                    ? styles.formBadgeL
-                                    : styles.formBadgeD
-                              }`}
-                            >
-                              {result}
-                            </span>
-                          ))
-                        ) : (
-                          <span className={styles.noForm}>-</span>
-                        )}
-                      </div>
-                    </td>
+
+          {/* Team Sections */}
+          {teams.map((team) => {
+            const teamPlayers = playersByTeam[team.id] || [];
+            if (teamPlayers.length === 0) return null;
+
+            return (
+              <section key={team.id} className={styles.section}>
+                <h3 className={styles.sectionTitle}>
+                  <span className={styles.teamBadge}>{team.badge}</span>
+                  {team.name}
+                </h3>
+                <table className={styles.leaderboardTable}>
+                  <thead>
+                    <tr>
+                      <th className={styles.colPlayer}>
+                        {
+                          ((dashboard.leaderboard as Record<string, Record<string, string>>)
+                            ?.headers?.player || 'Player') as string
+                        }
+                      </th>
+                      <th className={styles.colForm}>
+                        {
+                          ((dashboard.leaderboard as Record<string, Record<string, string>>)
+                            ?.headers?.form || 'Form') as string
+                        }
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>{teamPlayers.map((player) => renderPlayerRow(player))}</tbody>
+                </table>
+              </section>
+            );
+          })}
+
+          {/* Free Agents */}
+          {freeAgents.length > 0 && (
+            <section className={styles.section}>
+              <h3 className={styles.sectionTitle}>
+                {
+                  ((dashboard.leaderboard as Record<string, Record<string, string>>)?.teams
+                    ?.freeAgents || 'Free Agents') as string
+                }
+              </h3>
+              <table className={styles.leaderboardTable}>
+                <thead>
+                  <tr>
+                    <th className={styles.colPlayer}>
+                      {
+                        ((dashboard.leaderboard as Record<string, Record<string, string>>)?.headers
+                          ?.player || 'Player') as string
+                      }
+                    </th>
+                    <th className={styles.colForm}>
+                      {
+                        ((dashboard.leaderboard as Record<string, Record<string, string>>)?.headers
+                          ?.form || 'Form') as string
+                      }
+                    </th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </section>
+                </thead>
+                <tbody>{freeAgents.map((player) => renderPlayerRow(player))}</tbody>
+              </table>
+            </section>
+          )}
+
+          {/* Bench (Not Responded) */}
+          {benchPlayers.length > 0 && (
+            <section className={styles.section}>
+              <h3 className={styles.sectionTitle}>
+                {
+                  ((dashboard.leaderboard as Record<string, Record<string, string>>)?.teams
+                    ?.bench || 'Bench (No Response)') as string
+                }
+              </h3>
+              <table className={styles.leaderboardTable}>
+                <thead>
+                  <tr>
+                    <th className={styles.colPlayer}>
+                      {
+                        ((dashboard.leaderboard as Record<string, Record<string, string>>)?.headers
+                          ?.player || 'Player') as string
+                      }
+                    </th>
+                    <th className={styles.colTeam}>Ekipa</th>
+                    <th className={styles.colForm}>
+                      {
+                        ((dashboard.leaderboard as Record<string, Record<string, string>>)?.headers
+                          ?.form || 'Form') as string
+                      }
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>{benchPlayers.map((player) => renderPlayerRow(player, true))}</tbody>
+              </table>
+            </section>
+          )}
+        </div>
       </main>
     </div>
   );

@@ -6,6 +6,7 @@ import CreateShadowPlayerForm from './CreateShadowPlayerForm';
 import PlayerActions from './PlayerActions';
 import SeasonManagement from './SeasonManagement';
 import MatchdayManagement from './MatchdayManagement';
+import TeamManagement from './TeamManagement';
 import styles from '../page.module.css';
 import { useTranslations } from '@/i18n/client';
 
@@ -67,6 +68,7 @@ export default function AdminClient({ initialPlayers }: Props) {
             <CreateShadowPlayerForm onSuccess={fetchPlayers} />
           </section>
 
+          <TeamManagement />
           <SeasonManagement />
           <MatchdayManagement />
 

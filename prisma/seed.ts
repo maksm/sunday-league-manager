@@ -15,6 +15,7 @@ async function main() {
   await prisma.season.deleteMany();
   await prisma.player.deleteMany();
   await prisma.user.deleteMany();
+  await prisma.team.deleteMany();
   console.log('Database cleaned');
 
   // 2. Create the 2025/2026 season
@@ -52,7 +53,24 @@ async function main() {
 
   console.log('Created matchday:', matchday);
 
-  // 4. Create Admin User 'maks mržek'
+  // 4. Create Teams
+  const beliBalet = await prisma.team.create({
+    data: {
+      name: 'Beli Balet',
+      badge: '⚪',
+    },
+  });
+
+  const cikaInter = await prisma.team.create({
+    data: {
+      name: 'Cika Internazionale',
+      badge: '🔵',
+    },
+  });
+
+  console.log('Created teams:', beliBalet.name, cikaInter.name);
+
+  // 5. Create Admin User 'maks mržek'
   const adminPasswordHash = await hash('password', 12);
   const adminUser = await prisma.user.create({
     data: {
@@ -68,13 +86,13 @@ async function main() {
   });
   console.log('Created admin user:', adminUser.username);
 
-  // 5. Create some dummy players
+  // 6. Create some dummy players with team assignments
   const players = [
-    { name: 'Ronaldo' },
-    { name: 'Messi' },
-    { name: 'Neymar' },
-    { name: 'Mbappe' },
-    { name: 'Haaland' },
+    { name: 'Ronaldo', teamId: beliBalet.id },
+    { name: 'Messi', teamId: cikaInter.id },
+    { name: 'Neymar', teamId: beliBalet.id },
+    { name: 'Mbappe', teamId: cikaInter.id },
+    { name: 'Haaland', teamId: null }, // Free agent
   ];
 
   for (const p of players) {
@@ -91,13 +109,14 @@ async function main() {
         player: {
           create: {
             name: p.name,
+            teamId: p.teamId,
           },
         },
       },
     });
   }
 
-  console.log('Seeded players');
+  console.log('Seeded players with team assignments');
 }
 
 main()

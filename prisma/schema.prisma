@@ -36,6 +36,9 @@ model Player {
   userId        String?   @unique
   user          User?     @relation(fields: [userId], references: [id])
 
+  teamId        String?
+  team          Team?     @relation(fields: [teamId], references: [id])
+
   matchStats    MatchStat[]
   rsvps         RSVP[]
   votesCast     Vote[]    @relation("Voter")
@@ -50,6 +53,20 @@ model Player {
 
   @@index([name])
   @@index([isActive])
+  @@index([teamId])
+}
+
+model Team {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  badge     String?  // URL or emoji for team badge
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  players   Player[]
+
+  @@index([name])
 }
 
 model Season {
@@ -126,7 +143,7 @@ model RSVP {
   id        String   @id @default(cuid())
   matchdayId String
   playerId  String
-  status    String   // "IN", "IN_BEER", "OUT", "OUT_INJURED", "MAYBE"
+  status    String   // "IN", "IN_BEER", "IN_SUIT", "OUT", "OUT_INJURED", "OUT_BEER", "MAYBE"
   
   matchday  Matchday @relation(fields: [matchdayId], references: [id], onDelete: Cascade)
   player    Player   @relation(fields: [playerId], references: [id])

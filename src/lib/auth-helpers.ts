@@ -79,7 +79,7 @@ export interface PlayerError {
  */
 export async function getPlayerFromSession(user: SessionUser): Promise<PlayerResult | PlayerError> {
   const dbUser = await prisma.user.findUnique({
-    where: { id: user.id },
+    where: { username: user.name! },
     include: { player: true },
   });
 

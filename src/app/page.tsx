@@ -100,7 +100,7 @@ export default async function Home() {
               <div className={styles.heroStatDivider}></div>
               <div className={styles.heroStatItem}>
                 <div className={styles.heroStatValue}>25+</div>
-                <div className={styles.heroStatLabel}>petkov</div>
+                <div className={styles.heroStatLabel}>petkov v sezoni</div>
               </div>
               <div className={styles.heroStatDivider}></div>
               <div className={styles.heroStatItem}>

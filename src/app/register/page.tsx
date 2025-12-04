@@ -11,6 +11,12 @@ type Player = {
   name: string;
 };
 
+type Team = {
+  id: string;
+  name: string;
+  badge: string | null;
+};
+
 export default function RegisterPage() {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -18,8 +24,10 @@ export default function RegisterPage() {
   const [isUsernameManuallyEdited, setIsUsernameManuallyEdited] = useState(false);
   const [isClaiming, setIsClaiming] = useState(true);
   const [availablePlayers, setAvailablePlayers] = useState<Player[]>([]);
+  const [teams, setTeams] = useState<Team[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPlayerId, setSelectedPlayerId] = useState('');
+  const [selectedTeamId, setSelectedTeamId] = useState<string>('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -30,6 +38,11 @@ export default function RegisterPage() {
     fetch('/api/players?shadow=true')
       .then((res) => res.json())
       .then((data) => setAvailablePlayers(data))
+      .catch(console.error);
+
+    fetch('/api/teams')
+      .then((res) => res.json())
+      .then((data) => setTeams(data))
       .catch(console.error);
   }, []);
 
@@ -80,6 +93,7 @@ export default function RegisterPage() {
           name: isClaiming ? undefined : name,
           playerId: isClaiming ? selectedPlayerId : undefined,
           username,
+          teamId: selectedTeamId || null,
         }),
       });
 
@@ -270,6 +284,23 @@ export default function RegisterPage() {
               required
               disabled={loading}
             />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Team</label>
+            <select
+              value={selectedTeamId}
+              onChange={(e) => setSelectedTeamId(e.target.value)}
+              className={styles.input}
+              disabled={loading}
+            >
+              <option value="">💰 Prost agent</option>
+              {teams.map((team) => (
+                <option key={team.id} value={team.id}>
+                  {team.badge} {team.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <button

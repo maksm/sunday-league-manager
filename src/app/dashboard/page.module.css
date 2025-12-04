@@ -51,10 +51,23 @@
   backdrop-filter: blur(12px);
 }
 
-.sectionTitle {
-  font-size: 1.25rem;
+.formationsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mainTitle {
+  font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
   color: var(--text-primary);
   display: flex;
   align-items: center;
@@ -131,6 +144,26 @@
   color: var(--text-primary);
 }
 
+.teamBadge {
+  font-size: 1rem;
+  margin-right: 0.25rem;
+}
+
+.teamCell {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.teamCell .teamBadge {
+  margin-right: 0.35rem;
+}
+
+.noTeam {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
 .attendingBadge {
   color: var(--success);
   background: rgba(34, 197, 94, 0.1);
@@ -198,4 +231,26 @@
 .noForm {
   color: var(--text-secondary);
   font-size: 0.875rem;
+}
+
+/* Column alignment */
+.colPlayer {
+  width: auto;
+}
+
+.colTeam {
+  width: 120px;
+}
+
+.colForm {
+  width: 100px;
+  text-align: right;
+}
+
+.leaderboardTable td:last-child {
+  text-align: right;
+}
+
+.leaderboardTable td:last-child .formContainer {
+  justify-content: flex-end;
 }
