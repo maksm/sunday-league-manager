@@ -1,6 +1,7 @@
 {
   "title": "Nadzorna plošča",
   "subtitle": "Upravljaj igralce in senčne profile",
+  "backToDashboard": "Nazaj na nadzorno ploščo",
   "createShadowPlayer": {
     "title": "Ustvari senčni profil",
     "description": "Upravljajte profile igralcev. Lahko ustvarite senčne profile za igralce, ki se še niso registrirali.",

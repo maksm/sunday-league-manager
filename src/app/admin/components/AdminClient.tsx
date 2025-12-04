@@ -7,6 +7,8 @@ import PlayerActions from './PlayerActions';
 import SeasonManagement from './SeasonManagement';
 import MatchdayManagement from './MatchdayManagement';
 import TeamManagement from './TeamManagement';
+import UserMenu from '@/app/dashboard/UserMenu';
+import { UserRole } from '@/types/api';
 import styles from '../page.module.css';
 import { useTranslations } from '@/i18n/client';
 
@@ -19,9 +21,11 @@ type Player = {
 
 type Props = {
   initialPlayers: Player[];
+  userName: string;
+  teamId?: string | null;
 };
 
-export default function AdminClient({ initialPlayers }: Props) {
+export default function AdminClient({ initialPlayers, userName, teamId }: Props) {
   const [players, setPlayers] = useState<Player[]>(initialPlayers);
   const router = useRouter();
   const dict = useTranslations();
@@ -45,10 +49,18 @@ export default function AdminClient({ initialPlayers }: Props) {
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <header className={styles.header}>
-          <h1 className={styles.title}>{(admin.title as string) || 'Admin Dashboard'}</h1>
-          <p className={styles.subtitle}>
-            {(admin.subtitle as string) || 'Manage players and shadow profiles'}
-          </p>
+          <div className={styles.headerTop}>
+            <div>
+              <h1 className={styles.title}>{(admin.title as string) || 'Admin Dashboard'}</h1>
+              <p className={styles.subtitle}>
+                {(admin.subtitle as string) || 'Manage players and shadow profiles'}
+              </p>
+            </div>
+            <UserMenu userName={userName} userRole={UserRole.ADMIN} teamId={teamId} />
+          </div>
+          <a href="/dashboard" className={styles.backLink}>
+            ← {(admin.backToDashboard as string) || 'Back to Dashboard'}
+          </a>
         </header>
 
         <main className={styles.main}>

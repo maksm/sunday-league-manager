@@ -1,6 +1,7 @@
 {
   "title": "Admin Dashboard",
   "subtitle": "Manage players and shadow profiles",
+  "backToDashboard": "Back to Dashboard",
   "createShadowPlayer": {
     "title": "Create Shadow Player",
     "description": "Manage player profiles. You can create shadow profiles for players who haven't registered yet.",

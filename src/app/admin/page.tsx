@@ -21,6 +21,12 @@ export default async function AdminPage() {
     redirect('/dashboard');
   }
 
+  // Get player info for the current admin
+  const player = await prisma.player.findFirst({
+    where: { userId: user.id },
+    select: { teamId: true },
+  });
+
   // Fetch all players for admin
   const players = await prisma.player.findMany({
     include: {
@@ -35,5 +41,7 @@ export default async function AdminPage() {
     },
   });
 
-  return <AdminClient initialPlayers={players} />;
+  return (
+    <AdminClient initialPlayers={players} userName={session.user.name!} teamId={player?.teamId} />
+  );
 }
