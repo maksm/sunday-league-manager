@@ -16,6 +16,7 @@ type Player = {
   id: string;
   name: string;
   isActive: boolean;
+  teamId?: string | null;
   user: { username: string } | null;
 };
 

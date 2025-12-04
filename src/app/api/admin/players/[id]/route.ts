@@ -25,7 +25,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       }
     }
 
-    const { name, username, password, isActive } = body;
+    const { name, username, password, isActive, teamId } = body;
 
     // Check if player exists
     const existingPlayer = await prisma.player.findUnique({
@@ -38,9 +38,10 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     }
 
     // Update Player
-    const playerData: { name?: string; isActive?: boolean } = {};
+    const playerData: { name?: string; isActive?: boolean; teamId?: string | null } = {};
     if (name) playerData.name = name;
     if (typeof isActive === 'boolean') playerData.isActive = isActive;
+    if (teamId !== undefined) playerData.teamId = teamId || null;
 
     if (Object.keys(playerData).length > 0) {
       await prisma.player.update({

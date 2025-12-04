@@ -4,10 +4,17 @@ import { useState, useEffect } from 'react';
 import styles from './Modal.module.css';
 import { useTranslations } from '@/i18n/client';
 
+type Team = {
+  id: string;
+  name: string;
+  badge: string | null;
+};
+
 type Player = {
   id: string;
   name: string;
   isActive: boolean;
+  teamId?: string | null;
   user: { username: string } | null;
 };
 
@@ -19,6 +26,7 @@ type Props = {
     username?: string;
     password?: string;
     isActive: boolean;
+    teamId?: string | null;
   }) => Promise<void>;
   player: Player;
 };
@@ -28,6 +36,8 @@ export default function EditPlayerModal({ isOpen, onClose, onSave, player }: Pro
   const [username, setUsername] = useState(player.user?.username || '');
   const [password, setPassword] = useState('');
   const [isActive, setIsActive] = useState(player.isActive);
+  const [teamId, setTeamId] = useState<string>(player.teamId || '');
+  const [teams, setTeams] = useState<Team[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -40,7 +50,14 @@ export default function EditPlayerModal({ isOpen, onClose, onSave, player }: Pro
       setUsername(player.user?.username || '');
       setPassword('');
       setIsActive(player.isActive);
+      setTeamId(player.teamId || '');
       setError('');
+
+      // Fetch teams
+      fetch('/api/teams')
+        .then((res) => res.json())
+        .then((data) => setTeams(data))
+        .catch(console.error);
     }
   }, [isOpen, player]);
 
@@ -57,6 +74,7 @@ export default function EditPlayerModal({ isOpen, onClose, onSave, player }: Pro
         ...(player.user && { username }),
         ...(password && { password }),
         isActive,
+        teamId: teamId || null,
       });
       onClose();
     } catch (err) {
@@ -89,6 +107,22 @@ export default function EditPlayerModal({ isOpen, onClose, onSave, player }: Pro
               className={styles.input}
               required
             />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Team</label>
+            <select
+              value={teamId}
+              onChange={(e) => setTeamId(e.target.value)}
+              className={styles.input}
+            >
+              <option value="">💰 Free Agent</option>
+              {teams.map((team) => (
+                <option key={team.id} value={team.id}>
+                  {team.badge} {team.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           {player.user && (

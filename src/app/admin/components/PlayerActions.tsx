@@ -10,6 +10,7 @@ type Player = {
   id: string;
   name: string;
   isActive: boolean;
+  teamId?: string | null;
   user: { username: string } | null;
 };
 
@@ -41,6 +42,7 @@ export default function PlayerActions({ player, onUpdate, onDelete }: Props) {
     username?: string;
     password?: string;
     isActive: boolean;
+    teamId?: string | null;
   }) => {
     setLoading(true);
     try {
